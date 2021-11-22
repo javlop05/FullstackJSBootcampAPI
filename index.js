@@ -72,7 +72,7 @@ app.put('/api/notes/:id', (request, response) => {
     ...request.body
   }
 
-  response.status(204).end()
+  response.json(notes[noteToUpdate])
 })
 
 app.post('/api/notes', (request, response) => {
