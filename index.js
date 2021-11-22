@@ -11,33 +11,25 @@ app.use(logger)
 
 let notes = [
   {
-    userId: 1,
     id: 1,
-    title:
+    content:
       'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
-    body:
-      'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto'
+    important: true
   },
   {
-    userId: 1,
     id: 2,
-    title: 'qui est esse',
-    body:
-      'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'
+    content: 'qui est esse',
+    important: false
   },
   {
-    userId: 1,
     id: 3,
-    title: 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
-    body:
-      'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut'
+    content: 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
+    important: true
   },
   {
-    userId: 1,
     id: 4,
-    title: 'eum et est occaecati',
-    body:
-      'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit'
+    content: 'eum et est occaecati',
+    important: false
   }
 ]
 
@@ -64,6 +56,22 @@ app.get('/api/notes/:id', (request, response) => {
 app.delete('/api/notes/:id', (request, response) => {
   const id = Number(request.params.id)
   notes = notes.filter((note) => note.id !== id)
+  response.status(204).end()
+})
+
+app.put('/api/notes/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const noteToUpdate = notes.findIndex((note) => note.id === id)
+
+  if (noteToUpdate === -1) {
+    return response.status(409).end()
+  }
+
+  notes[noteToUpdate] = {
+    ...notes[noteToUpdate],
+    ...request.body
+  }
+
   response.status(204).end()
 })
 
