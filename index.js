@@ -56,7 +56,7 @@ app.get('/api/notes/:id', (request, response, next) => {
     } else {
       response.status(404).end()
     }
-  }).catch(err => next(err))
+  }).catch(next)
 })
 
 app.delete('/api/notes/:id', (request, response, next) => {
@@ -64,7 +64,7 @@ app.delete('/api/notes/:id', (request, response, next) => {
 
   Note.findByIdAndDelete(id).then(() => {
     response.status(204).end()
-  }).catch(error => next(error))
+  }).catch(next)
 })
 
 app.put('/api/notes/:id', (request, response, next) => {
@@ -78,7 +78,7 @@ app.put('/api/notes/:id', (request, response, next) => {
 
   Note.findByIdAndUpdate(id, newNoteInfo, { new: true }).then(result => {
     response.json(result)
-  }).catch(error => next(error))
+  }).catch(next)
 })
 
 app.post('/api/notes', (request, response, next) => {
@@ -98,7 +98,7 @@ app.post('/api/notes', (request, response, next) => {
 
   newNote.save()
     .then(savedNote => response.status(201).json(savedNote))
-    .catch(err => next(err))
+    .catch(next)
 })
 
 app.use(notFound)
