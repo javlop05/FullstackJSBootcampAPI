@@ -13,6 +13,7 @@ const Note = require('./models/Note')
 
 app.use(cors())
 app.use(express.json())
+app.use('/images', express.static('images'))
 
 app.use(logger)
 
