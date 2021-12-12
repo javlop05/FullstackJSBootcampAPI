@@ -12,6 +12,11 @@ const initialNotes = [
     content: 'Creating the notes API',
     important: true,
     date: new Date()
+  },
+  {
+    content: 'Doing refactor of code',
+    important: false,
+    date: new Date()
   }
 ]
 
