@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "start": "cross-env NODE_ENV=production node index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --silent --detectOpenHandles",
+    "test": "cross-env PORT=1234 NODE_ENV=test jest --verbose --silent --detectOpenHandles",
     "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
   "dependencies": {
     "@sentry/node": "^6.15.0",
     "@sentry/tracing": "^6.15.0",
+    "bcrypt": "^5.0.1",
     "cors": "2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",

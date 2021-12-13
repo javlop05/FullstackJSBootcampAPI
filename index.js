@@ -10,6 +10,7 @@ const logger = require('./middlewares/logger')
 const notFound = require('./middlewares/notFound')
 const handleErrors = require('./middlewares/handleErrors')
 const Note = require('./models/Note')
+const usersRouter = require('./controllers/users')
 
 app.use(cors())
 app.use(express.json())
@@ -103,6 +104,8 @@ app.post('/api/notes', async (request, response, next) => {
     next(err)
   }
 })
+
+app.use('/api/users', usersRouter)
 
 app.use(notFound)
 
