@@ -11,6 +11,7 @@ const notFound = require('./middlewares/notFound')
 const handleErrors = require('./middlewares/handleErrors')
 const Note = require('./models/Note')
 const usersRouter = require('./controllers/users')
+const User = require('./models/User')
 
 app.use(cors())
 app.use(express.json())
@@ -83,22 +84,33 @@ app.put('/api/notes/:id', (request, response, next) => {
 })
 
 app.post('/api/notes', async (request, response, next) => {
-  const note = request.body
+  const {
+    content,
+    important = false,
+    userId
+  } = request.body
 
-  if (!note || !note.content) {
+  if (!content) {
     return response.status(400).json({
       error: 'Note is missing'
     })
   }
 
+  const user = await User.findById(userId)
+
   const newNote = new Note({
-    content: note.content,
+    content: content,
     date: new Date(),
-    important: note.important !== undefined ? note.important : false
+    important,
+    user: user._id
   })
 
   try {
     const savedNote = await newNote.save()
+
+    user.notes = user.notes.concat(savedNote._id)
+    await user.save()
+
     response.status(201).json(savedNote)
   } catch (err) {
     next(err)
